@@ -55,6 +55,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSWORD }}
           script: |
+            docker network create proxy
             cd traefik
             docker compose down
             docker compose up --build -d
