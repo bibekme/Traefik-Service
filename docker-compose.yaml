@@ -12,7 +12,6 @@ services:
     ports:
       - 80:80
       - 443:443/tcp
-      # - 443:443/udp # Uncomment if you want HTTP3
     environment:
       CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
       TRAEFIK_DASHBOARD_DOMAIN_PREFIX: ${TRAEFIK_DASHBOARD_DOMAIN_PREFIX}
@@ -22,10 +21,10 @@ services:
     env_file: .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /etc/traefik/acme:/etc/traefik/acme
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./data/traefik.yml:/traefik.yml:ro
-      - ./data/acme.json:/acme.json
-      # - ./data/config.yml:/config.yml:ro
+      - ./traefik.yml:/traefik.yml:ro
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
