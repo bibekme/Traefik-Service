@@ -1,7 +1,6 @@
 name: Deploy Traefik Container
 
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   deploy:
