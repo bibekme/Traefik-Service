@@ -4,8 +4,6 @@ services:
   traefik:
     image: traefik:v3.0
     container_name: traefik
-    command: "--certificatesresolvers.cloudfare.acme.email=bibekkhatri291@gmail.com"
-
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
@@ -40,6 +38,7 @@ services:
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-secure.tls.certificatesresolvers.cloudfare.acme.email=bibekkhatri291@gmail.com"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=${DOMAIN}"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${DOMAIN}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
