@@ -8,6 +8,7 @@ services:
     command:
       - "--api.dashboard=true"
       - "--api.debug=true"
+      - "--metrics.addinternals=true"
       - "--accesslog=true"
       - "--accesslog.filepath=/var/log/traefik/access.log"
       - --accesslog.filepath=/path/to/access.log
