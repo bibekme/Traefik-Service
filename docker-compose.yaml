@@ -4,6 +4,8 @@ services:
   traefik:
     image: traefik:v3.0
     container_name: traefik
+    command: "--certificatesresolvers.cloudfare.acme.email=bibekkhatri291@gmail.com"
+
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
