@@ -26,6 +26,7 @@ services:
       - ./traefik.yml:/traefik.yml:ro
 
     labels:
+      - "certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}"
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN_PREFIX}.${DOMAIN}`)"
