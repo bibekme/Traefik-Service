@@ -4,8 +4,6 @@ services:
   traefik:
     image: traefik:v3.0
     container_name: traefik
-    command:
-      - --certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
@@ -43,6 +41,7 @@ services:
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=${DOMAIN}"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${DOMAIN}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
+      - traefik.http.routers.traefik-secure.certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}
 
 networks:
   proxy:
