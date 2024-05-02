@@ -27,6 +27,7 @@ jobs:
         with:
           envkey_CF_DNS_API_TOKEN: ${{ secrets.CF_DNS_API_TOKEN}}
           envkey_DOMAIN: ${{ secrets.DOMAIN}}
+          envkey_ACME_CA_SERVER: ${{secrets.ACME_CA_SERVER}}
           envkey_ACME_EMAIL: ${{ secrets.ACME_EMAIL }}
           envKey_TRAEFIK_DASHBOARD_DOMAIN_PREFIX: ${{ secrets.TRAEFIK_DASHBOARD_DOMAIN_PREFIX}}
           envkey_TRAEFIK_DASHBOARD_CREDENTIALS: ${{ secrets.TRAEFIK_DASHBOARD_CREDENTIALS }}

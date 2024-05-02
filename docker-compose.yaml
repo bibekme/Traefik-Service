@@ -4,7 +4,25 @@ services:
   traefik:
     image: traefik:v3.0
     container_name: traefik
-    restart: unless-stopped
+    restart: always
+    command:
+      - "--api.dashboard=true"
+      - "--api.debug=true"
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+      - "--entrypoints.http.http.redirections.entrypoint.to=https"
+      - "--entrypoints.http.http.redirections.entrypoint.scheme=https"
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.cloudflare.acme.storage=/etc/traefik/acme/acme.json"
+      - "--certificatesresolvers.cloudflare.acme.dnsChallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflare.acme.dnsChallenge.disablePropagationCheck=true"
+      - "--certificatesresolvers.cloudflare.acme.dnsChallenge.delayBeforeCheck=60s"
+      - "--certificatesresolvers.cloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+      - "--certificatesresolvers.cloudflare.acme.caserver=${ACME_CA_SERVER}"
     security_opt:
       - no-new-privileges:true
     networks:
@@ -17,13 +35,13 @@ services:
       TRAEFIK_DASHBOARD_DOMAIN_PREFIX: ${TRAEFIK_DASHBOARD_DOMAIN_PREFIX}
       TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
       DOMAIN: ${DOMAIN}
-      TRAEFIK_CERTIFICATESRESOLVERS_cloudflare_ACME_EMAIL: ${ACME_EMAIL}
+      ACME_CA_SERVER: ${ACME_CA_SERVER}
+      ACME_EMAIL: ${ACME_EMAIL}
     env_file: .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/traefik/acme:/etc/traefik/acme
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.yml:/traefik.yml:ro
 
     labels:
       - "traefik.enable=true"
