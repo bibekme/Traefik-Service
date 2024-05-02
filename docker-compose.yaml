@@ -17,7 +17,7 @@ services:
       TRAEFIK_DASHBOARD_DOMAIN_PREFIX: ${TRAEFIK_DASHBOARD_DOMAIN_PREFIX}
       TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
       DOMAIN: ${DOMAIN}
-      ACME_EMAIL: ${ACME_EMAIL}
+      TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFARE_ACME_EMAIL: ${ACME_EMAIL}
     env_file: .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -26,7 +26,6 @@ services:
       - ./traefik.yml:/traefik.yml:ro
 
     labels:
-      - "traefik.certificatesresolvers.cloudfare.acme.email=${ACME_EMAIL}"
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN_PREFIX}.${DOMAIN}`)"
@@ -42,7 +41,6 @@ services:
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=${DOMAIN}"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${DOMAIN}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-      - "traefik.certificatesresolvers.cfresolver.acme.email=${ACME_EMAIL}"
 
 networks:
   proxy:
