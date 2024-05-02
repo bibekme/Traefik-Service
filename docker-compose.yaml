@@ -9,7 +9,7 @@ services:
       - "--api.dashboard=true"
       - "--api.debug=true"
       - "--accesslog=true"
-      - "--accesslog-filepath=/var/log/traefik/access.log"
+      - "--accesslog.filepath=/var/log/traefik/access.log"
       - "--providers.docker=true"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--providers.docker.exposedbydefault=false"
